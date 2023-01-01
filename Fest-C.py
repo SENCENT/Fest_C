@@ -149,18 +149,18 @@ def Fest_C(mat, eps, d, n):
 if __name__ == '__main__':
     d = 1000  # size of domain
     n = 100  # number of users
-    mat = load_data(n, d)
+    mat = load_data(n, d)  # create a undirect knowledge graph
 
     for eps in [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]:
-        epoch = 500
+        epoch = 100
         metr = 0
         k = 0
         for i in range(epoch):
-            est_freq, k = Fest_C(mat, eps, d, n)
-            real_freq = relation_frequency_counting_matrix(mat, d)
-            metr = metr + get_MSE(real_freq[1:], est_freq)
+            est_freq, k = Fest_C(mat, eps, d, n)  # implement Fest_C estimate relation frequency with relation LDP
+            real_freq = relation_frequency_counting_matrix(mat, d)  # obtain real relation frequency
+            metr = metr + get_MSE(real_freq[1:], est_freq)  # calculate the Mean Square Error
         metr = metr / epoch
-        print(eps,"\t", metr, "\t", k)
+        print(eps,"\t", metr, "\t", k)  # display privacy budget, MSE, size of hyper-relation
 
 
 
